@@ -401,3 +401,11 @@ elif run_clicked and not is_air:
 
 else:
     st.info(t("idle", lang))
+
+# Shown on every view, results or not.
+st.divider()
+st.subheader(t("contact_header", lang))
+st.markdown(t("contact_text", lang))
+st.markdown(f"**{t('contact_name', lang)}** — "
+            "[fabio.furini@uniroma1.it](mailto:fabio.furini@uniroma1.it)")
+st.caption(t("contact_role", lang))

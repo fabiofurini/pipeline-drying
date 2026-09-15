@@ -256,6 +256,38 @@ STRINGS: dict[str, dict[str, str]] = {
         "it": "Questa combinazione di fette e orizzonte puo' richiedere diversi "
               "minuti. Per una prova rapida usa 60 fette."},
 
+    # --- contact ----------------------------------------------------------
+    "contact_header": {
+        "en": "Custom versions and optimisation",
+        "it": "Versioni personalizzate e ottimizzazione"},
+    "contact_text": {
+        "en": "This prototype can be tailored to a specific pipeline and "
+              "operating context, and extended with an **optimisation layer** "
+              "that selects equipment and operating strategy to meet a dryness "
+              "target at minimum time or cost — rather than only answering how "
+              "long a chosen strategy takes.\n\n"
+              "For custom versions, calibration against your own campaign data, "
+              "or optimisation features, get in touch:",
+        "it": "Questo prototipo può essere adattato a una specifica tubazione e "
+              "al suo contesto operativo, ed esteso con un **livello di "
+              "ottimizzazione** che sceglie attrezzature e strategia operativa "
+              "per raggiungere l'obiettivo di secchezza nel minor tempo o al "
+              "minor costo — invece di limitarsi a dire quanto dura una "
+              "strategia già scelta.\n\n"
+              "Per versioni personalizzate, taratura sui vostri dati di "
+              "campagna o funzionalità di ottimizzazione, scrivete a:"},
+    "contact_name": {"en": "Fabio Furini", "it": "Fabio Furini"},
+    "contact_role": {
+        "en": "Professor at Sapienza University of Rome, with a track record of "
+              "applied research projects carried out with industry. "
+              "Optimisation and decision support are his research area — which "
+              "is exactly what the planned optimisation layer draws on.",
+        "it": "Professore alla Sapienza Università di Roma, con esperienza di "
+              "progetti di ricerca applicata svolti con le aziende. "
+              "L'ottimizzazione e il supporto alle decisioni sono il suo ambito "
+              "di ricerca, ed è esattamente ciò su cui si basa il livello di "
+              "ottimizzazione previsto."},
+
     # --- about ------------------------------------------------------------
     "about": {"en": "About this tool", "it": "Che cos'e' questo strumento"},
     "about_text": {
