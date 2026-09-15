@@ -1,0 +1,25 @@
+# Virtual environments -- never commit these: ~650 MB, machine-specific paths
+# and a hard-coded interpreter version.
+.venv/
+venv/
+env/
+
+# Python bytecode and tool caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+
+# Local run outputs
+*.csv
+!examples/*.csv
+outputs/

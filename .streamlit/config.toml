@@ -1,0 +1,6 @@
+[server]
+# Nothing here is uploaded by the app, so the uploader is not needed.
+maxUploadSize = 5
+
+[browser]
+gatherUsageStats = false

@@ -1,0 +1,35 @@
+# Illustrative dry-air drying case, inspired by the order of magnitude of
+# parameters discussed in Ahmed et al. (1998) and Crivellini et al. (2013).
+# NOTE: these numbers are NOT digitized from either paper -- they are
+# plausible engineering values used to exercise the MVP and check that
+# trends (monotonic drying, longer time for -30 C than -20 C, etc.) are
+# physically sensible. Replace with real project/campaign data before
+# drawing any operational conclusion.
+name: literature_inspired_dry_air_case
+
+pipeline:
+  length_m: 50000.0
+  diameter_m: 0.6
+  n_cells: 200
+  wall_temperature_c: 15.0
+
+initial_water:
+  film_thickness_mm: 0.05
+
+initial_atmosphere:
+  dew_point_c: 10.0
+
+equipment:
+  volumetric_flow_nm3_h: 2000.0
+  pressure_bar_a: 5.0
+  inlet_temperature_c: 20.0
+  inlet_dew_point_c: -40.0
+
+acceptance:
+  target_c: -20.0
+  convention: auto
+  hold_duration_s: 3600.0
+
+simulation:
+  max_time_s: 259200.0  # 72 h
+  mass_transfer_multiplier: 1.0

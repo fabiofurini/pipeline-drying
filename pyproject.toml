@@ -1,0 +1,27 @@
+[project]
+name = "pipeline-drying"
+version = "0.1.0"
+description = "Physics-based prototype for pipeline drying (dry-air convection engine, MVP)"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.0",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "plotly>=5.18",
+    "streamlit>=1.32",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

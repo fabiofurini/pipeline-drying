@@ -1,0 +1,60 @@
+# Illustrative vacuum-drying case, sized on the same 2 km / 12-inch pipeline
+# used for the dry-air demonstration campaign so the two engines can be
+# compared on equal terms.
+#
+# NOTE: as for literature_air.yaml, these numbers are plausible engineering
+# values, NOT digitized from any paper or field campaign. The pump curve is a
+# generic two-stage rotary-vane shape (capacity flat at high pressure, falling
+# towards the blank-off pressure) and the booster a generic Roots train; both
+# must be replaced by real manufacturer data before any operational use.
+# Physics reference for the modelling framework: He & Li (2020).
+name: literature_inspired_vacuum_case
+
+pipeline:
+  length_m: 2000.0
+  diameter_m: 0.3
+  n_cells: 1          # unused by the lumped engine
+  wall_thickness_mm: 10.0
+  wall_temperature_c: 15.0
+
+initial_water:
+  film_thickness_mm: 0.03
+
+initial_atmosphere:
+  dew_point_c: 10.0
+  pressure_bar_a: 1.01325
+
+equipment:
+  n_pumps: 2
+  pump:
+    # Generic two-stage rotary-vane curve: flat capacity down to ~1 mbar,
+    # then falling away towards the blank-off pressure.
+    pressure_mbar:  [0.05, 0.1, 0.5, 1.0, 10.0, 100.0, 1013.0]
+    capacity_m3_h:  [0.0,  90.0, 400.0, 700.0, 980.0, 1000.0, 1000.0]
+    ultimate_pressure_mbar: 0.05
+  n_boosters: 1
+  booster:
+    # Roots booster + backing train, quoted as the capacity of the whole group.
+    pressure_mbar:  [0.05, 0.1, 1.0, 10.0, 50.0]
+    capacity_m3_h:  [0.0,  1500.0, 5000.0, 6000.0, 6000.0]
+    ultimate_pressure_mbar: 0.05
+  booster_activation_mbar: 20.0
+  derating: 1.0
+
+thermal:
+  external_temperature_c: 15.0
+  u_value_w_m2_k: 5.0
+  wall_coupling_fraction: 1.0
+
+acceptance:
+  target_pressure_mbar: 0.6      # ~ frost point -25 C if the gas were pure vapour
+  soak_duration_s: 3600.0
+  max_pressure_rise_mbar: 0.2
+  target_frost_point_c: -30.0
+  reference_pressure_bar_a: 5.0
+
+simulation:
+  max_time_s: 259200.0           # 72 h
+  evaporation_model: equilibrium
+  mass_transfer_multiplier: 1.0
+  max_cycles: 5
