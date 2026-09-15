@@ -273,6 +273,88 @@ STRINGS: dict[str, dict[str, str]] = {
         "it": "Questa combinazione di fette e orizzonte puo' richiedere diversi "
               "minuti. Per una prova rapida usa 60 fette."},
 
+    "process_help": {
+        "en": 'Which process to simulate. The two engines need different data, so the fields below change with this choice. Vacuum answers in under a second; dry air takes seconds to minutes.',
+        "it": "Quale metodo simulare. I due motori hanno bisogno di dati diversi, quindi i campi qui sotto cambiano con questa scelta. Il vuoto risponde in meno di un secondo, l'aria secca da secondi a minuti."},
+    "length_help": {
+        "en": 'Length of the section being dried. Together with the diameter it fixes both the wetted area water evaporates from and the gas volume to be flushed.',
+        "it": "Lunghezza della tratta da asciugare. Insieme al diametro determina sia la superficie bagnata da cui evapora l'acqua sia il volume di gas da lavare."},
+    "diameter_help": {
+        "en": 'Internal diameter. Doubling it doubles the wetted area, hence the residual water for a given film thickness, and quadruples the gas volume.',
+        "it": "Diametro interno. Raddoppiarlo raddoppia la superficie bagnata, quindi l'acqua residua a parità di spessore del velo, e quadruplica il volume di gas."},
+    "wall_temp_help": {
+        "en": 'Temperature of the pipe and its surroundings. It sets the saturation pressure at the wall, which is the driving force for evaporation: a colder line dries substantially more slowly.',
+        "it": "Temperatura del tubo e di ciò che lo circonda. Determina la pressione di saturazione alla parete, che è la forza motrice dell'evaporazione: una linea più fredda si asciuga molto più lentamente."},
+    "ambient_dew_help": {
+        "en": 'How wet the air trapped in the line is at the start. It only matters for the first few minutes, until that air is flushed out.',
+        "it": "Quanto è umida l'aria intrappolata nella linea all'inizio. Conta solo per i primi minuti, finché quell'aria non viene spazzata via."},
+    "flow_help": {
+        "en": 'Compressor throughput. Doubling it roughly halves the time but also doubles the power, so the energy used barely changes and only the rental bill falls.',
+        "it": "Portata del compressore. Raddoppiarla dimezza all'incirca il tempo ma raddoppia anche la potenza: l'energia consumata cambia poco e a calare è solo il costo di noleggio."},
+    "pressure_help": {
+        "en": 'Pressure at which the air circulates. At higher pressure the same dew point corresponds to far fewer ppm of water, which is why the reference pressure of the acceptance target matters so much.',
+        "it": "Pressione a cui circola l'aria. A pressione più alta lo stesso punto di rugiada corrisponde a molte meno ppm d'acqua: è il motivo per cui la pressione di riferimento dell'obiettivo conta così tanto."},
+    "inlet_temp_help": {
+        "en": 'Temperature of the air entering the line. It affects compressor power and, mildly, how much moisture the air can carry.',
+        "it": "Temperatura dell'aria immessa. Influenza la potenza del compressore e, in misura minore, quanta umidità l'aria può trasportare."},
+    "target_help": {
+        "en": 'The dryness the client requires, expressed as a dew or frost point. Each 10 °C step down is roughly a factor of three less water allowed.',
+        "it": 'La secchezza richiesta dal cliente, espressa come punto di rugiada o di brina. Ogni gradino di 10 °C verso il basso ammette circa tre volte meno acqua.'},
+    "target_custom_value_help": {
+        "en": 'Any target, if the standard −20 or −30 °C do not apply.',
+        "it": 'Un obiettivo qualsiasi, se i valori standard di −20 o −30 °C non si applicano.'},
+    "hold_help": {
+        "en": 'How long the outlet must stay below the target before it counts as reached. Without a hold, a brief dip during a transient would be enough.',
+        "it": "Per quanto tempo l'uscita deve restare sotto l'obiettivo perché sia considerato raggiunto. Senza mantenimento basterebbe un calo momentaneo durante un transitorio."},
+    "energy_price_help": {
+        "en": 'Electricity tariff, used with the computed compressor power.',
+        "it": "Tariffa dell'energia elettrica, usata con la potenza calcolata del compressore."},
+    "rental_help": {
+        "en": 'All-in hourly rate for equipment and crew. On typical figures this dominates the total, which is what makes shortening the campaign worth paying for.',
+        "it": 'Costo orario complessivo di mezzi e personale. Con valori tipici domina il totale: è ciò che rende conveniente pagare per accorciare la campagna.'},
+    "dryer_energy_help": {
+        "en": 'Regeneration energy of the air dryer, from its datasheet. Left at zero it is simply omitted — it varies tenfold between heatless, heated and blower-purge units, so guessing would be worse than leaving it out.',
+        "it": "Energia di rigenerazione dell'essiccatore, dalla sua scheda tecnica. Se resta a zero viene semplicemente omessa: varia di dieci volte fra unità heatless, riscaldate e a blower-purge, quindi tirare a indovinare sarebbe peggio che ometterla."},
+    "n_pumps_help": {
+        "en": 'Pumps working in parallel. Returns diminish quickly: what matters is capacity at low pressure, which is what a booster provides.',
+        "it": 'Pompe in parallelo. I benefici calano in fretta: ciò che conta è la capacità alle basse pressioni, che è quella fornita dal booster.'},
+    "use_booster_help": {
+        "en": 'A booster train reaches far lower pressures than backing pumps alone. On the example case it saves more time than doubling the number of pumps.',
+        "it": 'Un gruppo booster raggiunge pressioni molto più basse delle sole pompe di base. Nel caso di esempio fa guadagnare più tempo che raddoppiare il numero di pompe.'},
+    "booster_activation_help": {
+        "en": 'Suction pressure at which the booster takes over from the backing pumps.',
+        "it": 'Pressione di aspirazione alla quale il booster subentra alle pompe di base.'},
+    "derating_help": {
+        "en": 'Capacity actually delivered as a fraction of the datasheet curve. Real pumps rarely meet their rating once worn or with leaks in the connection.',
+        "it": 'Capacità realmente erogata come frazione della curva di catalogo. Le pompe reali raramente raggiungono il dato nominale, per usura o perdite nei collegamenti.'},
+    "external_temp_help": {
+        "en": 'Temperature of the ground, sea or air around the line. It is the source of the heat that evaporation consumes.',
+        "it": "Temperatura del terreno, del mare o dell'aria attorno alla linea. È la sorgente del calore che l'evaporazione consuma."},
+    "target_pressure_help": {
+        "en": 'Absolute pressure to reach before isolating the line. Once the line is evacuated it is almost pure water vapour, so this pressure is effectively a dryness target in itself.',
+        "it": 'Pressione assoluta da raggiungere prima di isolare la linea. A linea evacuata il gas è quasi solo vapore acqueo, quindi questa pressione è di fatto già un obiettivo di secchezza.'},
+    "use_frost_target_help": {
+        "en": 'Adds a frost-point requirement on top of the pressure one. Draw-down then continues until whichever of the two binds is satisfied.',
+        "it": 'Aggiunge un requisito sul punto di brina oltre a quello di pressione. La discesa prosegue finché non è soddisfatto il più stringente dei due.'},
+    "frost_target_help": {
+        "en": 'Frost point the residual vapour must reach, measured in the line under vacuum.',
+        "it": 'Punto di brina che il vapore residuo deve raggiungere, misurato in linea sotto vuoto.'},
+    "soak_help": {
+        "en": 'How long the line stays isolated with the pumps off. This is the test itself: water still present reveals itself by pushing the pressure back up.',
+        "it": "Per quanto tempo la linea resta isolata con le pompe ferme. È il collaudo vero e proprio: l'acqua ancora presente si rivela facendo risalire la pressione."},
+    "max_rise_help": {
+        "en": 'Pressure rebound tolerated during the soak. Tighten it and more water must be gone before the line passes.',
+        "it": "Risalita di pressione tollerata durante l'isolamento. Restringendola, deve essere stata rimossa più acqua perché la linea superi il collaudo."},
+    "reference_pressure_help": {
+        "en": 'Pressure the line will be filled to afterwards. Filling with dry gas leaves the water unchanged but dilutes it, so the same residual water reads a very different dew point — which is reported below.',
+        "it": "Pressione a cui la linea verrà riempita in seguito. Riempire con gas secco non cambia l'acqua presente ma la diluisce, quindi la stessa acqua residua si legge come un punto di rugiada molto diverso — riportato più sotto."},
+    "evaporation_closure_help": {
+        "en": 'Which interfacial evaporation law to use. In practice they agree to within 1%, because the pump, not the interface, sets the pace.',
+        "it": "Quale legge di evaporazione all'interfaccia usare. In pratica concordano entro l'1%, perché a dettare il ritmo è la pompa, non l'interfaccia."},
+    "horizon_help": {
+        "en": 'How far ahead to simulate — a limit on the calculation, not a prediction of the duration. If the target is reached earlier the run stops there; if the horizon is too short the answer is "not reached", which means extend it rather than that the target is impossible.',
+        "it": 'Fin dove spingere la simulazione: è un limite del calcolo, non una previsione della durata. Se l\'obiettivo viene raggiunto prima, il calcolo si ferma lì; se l\'orizzonte è troppo corto la risposta è "non raggiunto", che significa allungarlo, non che l\'obiettivo sia impossibile.'},
+
     # --- contact ----------------------------------------------------------
     "contact_header": {
         "en": "Custom versions and optimisation",

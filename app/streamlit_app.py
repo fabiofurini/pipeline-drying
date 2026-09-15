@@ -81,7 +81,7 @@ with st.expander(t("about", lang)):
 
 with st.sidebar:
     process = st.radio(t("process", lang), [t("dry_air", lang), t("vacuum", lang)],
-                       horizontal=True)
+                       horizontal=True, help=t("process_help", lang))
     is_air = process == t("dry_air", lang)
     # Each engine starts from its own example: the dry-air one is a 50 km line,
     # which no realistic vacuum spread would dry in a horizon anyone waits for.
@@ -89,9 +89,11 @@ with st.sidebar:
 
     st.header(t("h_pipeline", lang))
     length_km = st.number_input(t("length", lang), 0.1, 2000.0,
-                                base.pipeline.length_m / 1000, step=1.0)
+                                base.pipeline.length_m / 1000, step=1.0,
+                                help=t("length_help", lang))
     diameter_mm = st.number_input(t("diameter", lang), 10.0, 2000.0,
-                                  base.pipeline.diameter_m * 1000, step=10.0)
+                                  base.pipeline.diameter_m * 1000, step=10.0,
+                                  help=t("diameter_help", lang))
     if is_air:
         n_cells = st.slider(t("cells", lang), 20, 400,
                             air_example.pipeline.n_cells, step=10,
@@ -103,14 +105,16 @@ with st.sidebar:
                                             vacuum_example.pipeline.wall_thickness_mm,
                                             help=t("wall_thickness_help", lang))
     wall_temp_c = st.number_input(t("wall_temp", lang), -60.0, 80.0,
-                                  base.pipeline.wall_temperature_c)
+                                  base.pipeline.wall_temperature_c,
+                                  help=t("wall_temp_help", lang))
 
     st.header(t("h_water", lang))
     film_um = st.number_input(t("film", lang), 0.1, 5000.0,
                               base.initial_water.film_thickness_mm * 1000,
                               help=t("film_help", lang))
     ambient_dew_c = st.number_input(t("ambient_dew", lang), -80.0, 60.0,
-                                    base.initial_atmosphere.dew_point_c)
+                                    base.initial_atmosphere.dew_point_c,
+                                    help=t("ambient_dew_help", lang))
     if is_air:
         trapped_pct = st.slider(t("trapped", lang), 0.0, 50.0,
                                 100.0 * air_example.initial_water.trapped_fraction,
@@ -130,22 +134,28 @@ with st.sidebar:
     if is_air:
         st.header(t("h_air_equipment", lang))
         flow_nm3_h = st.number_input(t("flow", lang), 10.0, 200000.0,
-                                     air_example.equipment.volumetric_flow_nm3_h or 2000.0)
+                                     air_example.equipment.volumetric_flow_nm3_h or 2000.0,
+                                     help=t("flow_help", lang))
         pressure_bar = st.number_input(t("pressure", lang), 1.0, 300.0,
-                                       air_example.equipment.pressure_bar_a)
+                                       air_example.equipment.pressure_bar_a,
+                                       help=t("pressure_help", lang))
         inlet_temp_c = st.number_input(t("inlet_temp", lang), -40.0, 100.0,
-                                       air_example.equipment.inlet_temperature_c)
+                                       air_example.equipment.inlet_temperature_c,
+                                       help=t("inlet_temp_help", lang))
         inlet_dew_c = st.number_input(t("inlet_dew", lang), -90.0, 20.0,
                                       air_example.equipment.inlet_dew_point_c,
                                       help=t("inlet_dew_help", lang))
 
         st.header(t("h_acceptance", lang))
         target_choice = st.selectbox(t("target", lang),
-                                     [-20.0, -30.0, t("target_custom", lang)], index=0)
-        target_c = (st.number_input(t("target_custom_value", lang), -90.0, 20.0, -25.0)
+                                     [-20.0, -30.0, t("target_custom", lang)], index=0,
+                                     help=t("target_help", lang))
+        target_c = (st.number_input(t("target_custom_value", lang), -90.0, 20.0, -25.0,
+                                    help=t("target_custom_value_help", lang))
                     if target_choice == t("target_custom", lang) else float(target_choice))
         hold_h = st.number_input(t("hold", lang), 0.0, 48.0,
-                                 air_example.acceptance.hold_duration_s / 3600)
+                                 air_example.acceptance.hold_duration_s / 3600,
+                                 help=t("hold_help", lang))
         quoted_atmospheric = st.checkbox(t("quoted_atm", lang), value=False,
                                          help=t("quoted_atm_help", lang))
         dryer_atmospheric = st.checkbox(t("dryer_atm", lang), value=False,
@@ -157,24 +167,32 @@ with st.sidebar:
             default=[air_example.acceptance.target_c,
                      *air_example.acceptance.additional_targets_c],
             help=t("compare_help", lang))
-        energy_price = st.number_input(t("energy_price", lang), 0.0, 5.0, 0.25, step=0.05)
-        rental_rate = st.number_input(t("rental", lang), 0.0, 10000.0, 150.0, step=50.0)
-        dryer_energy = st.number_input(t("dryer_energy", lang), 0.0, 100.0, 0.0, step=0.5)
+        energy_price = st.number_input(t("energy_price", lang), 0.0, 5.0, 0.25, step=0.05,
+                                       help=t("energy_price_help", lang))
+        rental_rate = st.number_input(t("rental", lang), 0.0, 10000.0, 150.0, step=50.0,
+                                      help=t("rental_help", lang))
+        dryer_energy = st.number_input(t("dryer_energy", lang), 0.0, 100.0, 0.0, step=0.5,
+                                       help=t("dryer_energy_help", lang))
     else:
         st.header(t("h_vac_equipment", lang))
         st.caption(t("pump_curve_note", lang))
-        n_pumps = st.slider(t("n_pumps", lang), 1, 8, vacuum_example.equipment.n_pumps)
+        n_pumps = st.slider(t("n_pumps", lang), 1, 8, vacuum_example.equipment.n_pumps,
+                            help=t("n_pumps_help", lang))
         use_booster = st.checkbox(t("use_booster", lang),
-                                  value=vacuum_example.equipment.booster is not None)
+                                  value=vacuum_example.equipment.booster is not None,
+                                  help=t("use_booster_help", lang))
         booster_activation = st.number_input(
             t("booster_activation", lang), 0.1, 500.0,
-            vacuum_example.equipment.booster_activation_mbar or 20.0)
+            vacuum_example.equipment.booster_activation_mbar or 20.0,
+            help=t("booster_activation_help", lang))
         derating = st.slider(t("derating", lang), 0.1, 1.0,
-                             vacuum_example.equipment.derating)
+                             vacuum_example.equipment.derating,
+                             help=t("derating_help", lang))
 
         st.header(t("h_heat", lang))
         external_temp_c = st.number_input(t("external_temp", lang), -40.0, 60.0,
-                                          vacuum_example.thermal.external_temperature_c)
+                                          vacuum_example.thermal.external_temperature_c,
+                                          help=t("external_temp_help", lang))
         u_value = st.number_input(t("u_value", lang), 0.0, 500.0,
                                   vacuum_example.thermal.u_value_w_m2_k,
                                   help=t("u_value_help", lang))
@@ -182,30 +200,38 @@ with st.sidebar:
         st.header(t("h_acceptance", lang))
         target_pressure_mbar = st.number_input(
             t("target_pressure", lang), 0.01, 500.0,
-            vacuum_example.acceptance.target_pressure_mbar)
+            vacuum_example.acceptance.target_pressure_mbar,
+            help=t("target_pressure_help", lang))
         use_frost_target = st.checkbox(
             t("use_frost_target", lang),
-            value=vacuum_example.acceptance.target_frost_point_c is not None)
+            value=vacuum_example.acceptance.target_frost_point_c is not None,
+            help=t("use_frost_target_help", lang))
         target_choice = st.selectbox(t("frost_target", lang),
-                                     [-20.0, -30.0, t("target_custom", lang)], index=1)
-        target_c = (st.number_input(t("target_custom_value", lang), -90.0, 20.0, -25.0)
+                                     [-20.0, -30.0, t("target_custom", lang)], index=1,
+                                     help=t("frost_target_help", lang))
+        target_c = (st.number_input(t("target_custom_value", lang), -90.0, 20.0, -25.0,
+                                    help=t("target_custom_value_help", lang))
                     if target_choice == t("target_custom", lang) else float(target_choice))
         drawdown_factor = st.slider(t("drawdown", lang), 0.1, 1.0,
                                     vacuum_example.acceptance.drawdown_factor,
                                     help=t("drawdown_help", lang))
         hold_h = st.number_input(t("soak", lang), 0.0, 48.0,
-                                 vacuum_example.acceptance.soak_duration_s / 3600)
+                                 vacuum_example.acceptance.soak_duration_s / 3600,
+                                 help=t("soak_help", lang))
         max_rise_mbar = st.number_input(t("max_rise", lang), 0.001, 100.0,
                                         vacuum_example.acceptance.max_pressure_rise_mbar,
-                                        format="%.3f")
+                                        format="%.3f", help=t("max_rise_help", lang))
         reference_bar = st.number_input(
             t("reference_pressure", lang), 1.0, 300.0,
-            vacuum_example.acceptance.reference_pressure_bar_a or 5.0)
+            vacuum_example.acceptance.reference_pressure_bar_a or 5.0,
+            help=t("reference_pressure_help", lang))
         evaporation_model = st.selectbox(t("evaporation_closure", lang),
-                                         ["equilibrium", "hertz_knudsen"])
+                                         ["equilibrium", "hertz_knudsen"],
+                                         help=t("evaporation_closure_help", lang))
 
     max_time_h = st.number_input(t("horizon", lang), 1.0, 2000.0,
-                                 base.simulation.max_time_s / 3600)
+                                 base.simulation.max_time_s / 3600,
+                                 help=t("horizon_help", lang))
     if is_air and n_cells * max_time_h > 20000:
         st.caption(":orange[" + t("slow_warning", lang) + "]")
 
