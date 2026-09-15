@@ -71,7 +71,13 @@ air_example = st.session_state["air_example"]
 vacuum_example = st.session_state["vacuum_example"]
 
 with st.sidebar:
-    language = st.selectbox("Language / Lingua", list(LANGUAGES), index=0)
+    # Bilingual help, since this is the one control a visitor may reach before
+    # choosing a language.
+    language = st.selectbox(
+        "Language / Lingua", list(LANGUAGES), index=0,
+        help="Language of the interface. The technical documentation stays in "
+             "English.  •  Lingua dell'interfaccia. La documentazione tecnica "
+             "resta in inglese.")
 lang = LANGUAGES[language]
 
 st.title(t("title", lang))
