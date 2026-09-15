@@ -43,7 +43,10 @@ from pipeline_drying.models.vacuum_lumped import run_vacuum_drying  # noqa: E402
 from pipeline_drying.reporting import summary_text, vacuum_summary_text  # noqa: E402
 
 EXAMPLES = Path(__file__).resolve().parent.parent / "examples"
-AIR_EXAMPLE = EXAMPLES / "literature_air.yaml"
+# demo_air.yaml rather than literature_air.yaml: the 50 km literature case
+# needs far longer than its own horizon to dry, so a visitor's first click
+# would return "not reached".
+AIR_EXAMPLE = EXAMPLES / "demo_air.yaml"
 VACUUM_EXAMPLE = EXAMPLES / "literature_vacuum.yaml"
 
 
@@ -89,7 +92,8 @@ with st.sidebar:
     diameter_mm = st.number_input(t("diameter", lang), 10.0, 2000.0,
                                   base.pipeline.diameter_m * 1000, step=10.0)
     if is_air:
-        n_cells = st.slider(t("cells", lang), 20, 400, 60, step=10,
+        n_cells = st.slider(t("cells", lang), 20, 400,
+                            air_example.pipeline.n_cells, step=10,
                             help=t("cells_help", lang))
         wall_thickness_mm = vacuum_example.pipeline.wall_thickness_mm
     else:
@@ -112,7 +116,10 @@ with st.sidebar:
     trapped_ratio = st.select_slider(
         t("release", lang),
         options=[0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.2],
-        value=0.001, help=t("release_help", lang))
+        value=base.simulation.trapped_transfer_ratio
+        if base.simulation.trapped_transfer_ratio in
+        (0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.2) else 0.001,
+        help=t("release_help", lang))
 
     if is_air:
         st.header(t("h_air_equipment", lang))
@@ -139,10 +146,11 @@ with st.sidebar:
                                         help=t("dryer_atm_help", lang))
 
         st.header(t("h_comparison", lang))
-        compare_targets = st.multiselect(t("compare_targets", lang),
-                                         [-20.0, -30.0, -40.0, -50.0],
-                                         default=[-20.0, -30.0, -50.0],
-                                         help=t("compare_help", lang))
+        compare_targets = st.multiselect(
+            t("compare_targets", lang), [-20.0, -30.0, -40.0, -50.0],
+            default=[air_example.acceptance.target_c,
+                     *air_example.acceptance.additional_targets_c],
+            help=t("compare_help", lang))
         energy_price = st.number_input(t("energy_price", lang), 0.0, 5.0, 0.25, step=0.05)
         rental_rate = st.number_input(t("rental", lang), 0.0, 10000.0, 150.0, step=50.0)
         dryer_energy = st.number_input(t("dryer_energy", lang), 0.0, 100.0, 0.0, step=0.5)

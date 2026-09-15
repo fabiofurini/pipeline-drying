@@ -215,3 +215,28 @@ def test_referenced_outlet_series_is_drier_than_the_in_line_reading():
 
 def test_no_reference_pressure_means_no_referenced_series():
     assert run_air_drying(case()).outlet_referenced_c is None
+
+
+# --------------------------------------------------------------------------
+# The configuration the public interface opens with
+# --------------------------------------------------------------------------
+
+
+def test_demo_case_answers_on_the_first_click():
+    """examples/demo_air.yaml is what a visitor runs before touching anything.
+
+    It has to produce a real answer quickly: every comparison target reached,
+    and reached at visibly different times. A default that returns "not
+    reached" teaches a first-time visitor nothing.
+    """
+    config = AirDryingCaseConfig.from_yaml("examples/demo_air.yaml")
+    result = run_air_drying(config)
+
+    assert result.time_to_target_s is not None
+    times = [result.time_to_target_s, *result.additional_target_times_s.values()]
+    assert all(t is not None for t in times), "a comparison target was not reached"
+    # ...and the targets must actually differ, or the comparison shows nothing.
+    assert max(times) > 1.15 * min(times)
+    # Comfortably inside the horizon, so the default stays valid if the
+    # parameters are nudged.
+    assert max(times) < 0.9 * config.simulation.max_time_s

@@ -9,10 +9,15 @@ result = run_air_drying(config)
 
 | File | Case |
 |---|---|
-| [`literature_air.yaml`](literature_air.yaml) | 50 km × 600 mm, dry-air drying at 2000 Nm³/h |
+| [`demo_air.yaml`](demo_air.yaml) | 2 km × 300 mm at 600 Nm³/h — what the web interface opens with |
+| [`literature_air.yaml`](literature_air.yaml) | 50 km × 600 mm at 2000 Nm³/h — the case used in the written studies |
 | [`literature_vacuum.yaml`](literature_vacuum.yaml) | 2 km × 300 mm, two pumps plus a booster |
 
-Both are also the defaults the web interface loads.
+`demo_air.yaml` exists for one reason: a visitor's first click has to return a
+real answer in a few seconds. The 50 km literature case needs far longer than
+its own horizon to dry, so the first thing an unprepared visitor would see is
+"not reached". A regression test keeps the demo honest — every comparison
+target reached, at visibly different times, comfortably inside the horizon.
 
 ## What these numbers are, and are not
 

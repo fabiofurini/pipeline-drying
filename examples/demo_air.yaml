@@ -1,0 +1,44 @@
+# Default case for the web interface.
+#
+# Chosen so that pressing Run straight away gives a meaningful answer in a few
+# seconds: all three comparison targets are reached, they cost visibly
+# different amounts, and the trapped-water warning fires -- which is one of the
+# more interesting things the model has to say.
+#
+# literature_air.yaml is the 50 km case used in the written studies. It is a
+# better example of a real campaign and a worse first impression: it needs far
+# more than its own horizon to dry, so a visitor's first click would return
+# "not reached".
+#
+# As everywhere in examples/, these are plausible engineering values, not
+# measurements.
+name: demo_dry_air_case
+
+pipeline:
+  length_m: 2000.0
+  diameter_m: 0.3
+  n_cells: 40
+  wall_temperature_c: 15.0
+
+initial_water:
+  film_thickness_mm: 0.02
+  trapped_fraction: 0.15     # low points, valve cavities, dead legs
+
+initial_atmosphere:
+  dew_point_c: 10.0
+
+equipment:
+  volumetric_flow_nm3_h: 600.0
+  pressure_bar_a: 5.0
+  inlet_temperature_c: 20.0
+  inlet_dew_point_c: -60.0   # dry enough that even -50 C stays reachable
+
+acceptance:
+  target_c: -20.0
+  additional_targets_c: [-30.0, -50.0]
+  convention: auto
+  hold_duration_s: 3600.0
+
+simulation:
+  max_time_s: 360000.0       # 100 h
+  trapped_transfer_ratio: 0.001
