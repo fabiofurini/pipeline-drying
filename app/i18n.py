@@ -26,6 +26,15 @@ STRINGS: dict[str, dict[str, str]] = {
                     "it": "Simulazione ad aria secca in corso..."},
     "running_vacuum": {"en": "Running vacuum drying simulation...",
                        "it": "Simulazione a vuoto in corso..."},
+    "running_detail_air": {
+        "en": "Integrating {cells} cells over {hours:g} h of campaign. "
+              "A fine grid over a long horizon can take minutes.",
+        "it": "Integrazione di {cells} fette su {hours:g} h di campagna. "
+              "Una griglia fitta su un orizzonte lungo può richiedere minuti."},
+    "running_detail_vacuum": {
+        "en": "Integrating the draw-down and soak sequence.",
+        "it": "Integrazione della sequenza di discesa e isolamento."},
+    "done": {"en": "Done in {seconds:.1f} s", "it": "Completata in {seconds:.1f} s"},
     "idle": {
         "en": "Pick a process, set the inputs on the left and press **Run simulation**.",
         "it": "Scegli il metodo, imposta i dati a sinistra e premi **Avvia simulazione**."},
@@ -86,6 +95,14 @@ STRINGS: dict[str, dict[str, str]] = {
         "it": "Piu' lento non vuol dire sempre piu' lungo: acqua cosi' lenta da "
               "non farsi notare all'uscita fa superare il collaudo con l'acqua "
               "ancora dentro."},
+
+    "trapped_vacuum_note": {
+        "en": "Trapped water is modelled in the dry-air engine only. The vacuum "
+              "engine still holds all residual water in one inventory, so these "
+              "two settings do not apply here.",
+        "it": "L'acqua in punti nascosti è modellata solo nel motore ad aria "
+              "secca. Il motore a vuoto tiene ancora tutta l'acqua residua in un "
+              "unico serbatoio, quindi queste due impostazioni non si applicano."},
 
     # --- dry-air equipment ------------------------------------------------
     "flow": {"en": "Dry-air flow (Nm3/h)", "it": "Portata d'aria secca (Nm3/h)"},

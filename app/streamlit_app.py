@@ -13,6 +13,7 @@ minutes and recomputing on every widget change would make the page unusable.
 from __future__ import annotations
 
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -110,16 +111,21 @@ with st.sidebar:
                               help=t("film_help", lang))
     ambient_dew_c = st.number_input(t("ambient_dew", lang), -80.0, 60.0,
                                     base.initial_atmosphere.dew_point_c)
-    trapped_pct = st.slider(t("trapped", lang), 0.0, 50.0,
-                            100.0 * base.initial_water.trapped_fraction, step=1.0,
-                            help=t("trapped_help", lang))
-    trapped_ratio = st.select_slider(
-        t("release", lang),
-        options=[0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.2],
-        value=base.simulation.trapped_transfer_ratio
-        if base.simulation.trapped_transfer_ratio in
-        (0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.2) else 0.001,
-        help=t("release_help", lang))
+    if is_air:
+        trapped_pct = st.slider(t("trapped", lang), 0.0, 50.0,
+                                100.0 * air_example.initial_water.trapped_fraction,
+                                step=1.0, help=t("trapped_help", lang))
+        release_options = [0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.2]
+        example_ratio = air_example.simulation.trapped_transfer_ratio
+        trapped_ratio = st.select_slider(
+            t("release", lang), options=release_options,
+            value=example_ratio if example_ratio in release_options else 0.001,
+            help=t("release_help", lang))
+    else:
+        # Not shown for vacuum: the engine keeps all residual water in one
+        # inventory, so offering the controls would imply an effect there is none.
+        trapped_pct, trapped_ratio = 0.0, 0.001
+        st.caption(t("trapped_vacuum_note", lang))
 
     if is_air:
         st.header(t("h_air_equipment", lang))
@@ -226,8 +232,12 @@ if run_clicked and is_air:
                                     trapped_transfer_ratio=trapped_ratio),
     )
 
-    with st.spinner(t("running_air", lang)):
+    with st.status(t("running_air", lang), expanded=True) as status:
+        st.write(t("running_detail_air", lang, cells=n_cells, hours=max_time_h))
+        started = time.perf_counter()
         result = run_air_drying(config)
+        status.update(label=t("done", lang, seconds=time.perf_counter() - started),
+                      state="complete", expanded=False)
 
     col1, col2, col3 = st.columns(3)
     col1.metric(t("m_time_target", lang),
@@ -349,8 +359,12 @@ elif run_clicked and not is_air:
                                           evaporation_model=evaporation_model),
     )
 
-    with st.spinner(t("running_vacuum", lang)):
+    with st.status(t("running_vacuum", lang), expanded=True) as status:
+        st.write(t("running_detail_vacuum", lang))
+        started = time.perf_counter()
         result = run_vacuum_drying(config)
+        status.update(label=t("done", lang, seconds=time.perf_counter() - started),
+                      state="complete", expanded=False)
 
     col1, col2, col3, col4 = st.columns(4)
     col1.metric(t("m_time_acceptance", lang),
