@@ -1,7 +1,7 @@
 # Runtime dependencies for the Streamlit demo deployment.
 # The authoritative list is in pyproject.toml; this file exists because
 # Streamlit Community Cloud installs from requirements.txt.
-numpy>=1.26
+numpy>=2.0        # np.trapezoid was added in numpy 2.0
 scipy>=1.11
 pandas>=2.0
 pydantic>=2.5
